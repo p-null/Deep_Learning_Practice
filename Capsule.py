@@ -3,7 +3,7 @@ import torch.nn.functional as F
 
 
 def _squash(x):
-    norm = x.norm(p=2, dim=dim, keepdim=True)
+    norm = x.norm(p=2, dim=-1, keepdim=True)
     scale = norm / (1 + norm ** 2)
     return scale * input
 
@@ -11,19 +11,21 @@ def _dynamic_routing(input, bias, num_iter, squash):
     """
     Parameters
     ----------
-    input: ``torch.LongTensor``
+    input : ``torch.LongTensor``
         The input capsules of shape ``(batch_size, out_capsules, in_capsules, out_dim)`` 
+    bias : ``torch.LongTensor``
+        bias for the output capsules, having shape of ``(batch_size, out_capsules, out_dim)``
     Returns
     -------
-        out: ``torch.LongTensor``
+    out: ``torch.LongTensor``
         The output capsule of shape: ``(batch_size, out_capsules, out_dim)``
     """
     b_ij = torch.zeros_like(input)
     for i in range(num_iter):
         c_ij = F.softmax(b_ij, dim=-3)
 
-        # out: [batch_size, out_capsules, in_capsules, out_dim] <-
-        # c_ij: [batch_size, out_capsules, in_capsules, out_dim] *
+        # out:   [batch_size, out_capsules, 1,           out_dim] <-
+        # c_ij:  [batch_size, out_capsules, in_capsules, out_dim] *
         # input: [batch_size, out_capsules, in_capsules, out_dim]
         out = (c_ij * input).sum(dim=-2) + bias
 
@@ -34,7 +36,7 @@ def _dynamic_routing(input, bias, num_iter, squash):
         b_ij = (out * input).sum(dim=-1, keepdim=True)
 
         # original implementation in the paper
-        #b_ij = b_ij + (out * input).sum(dim=-1, keepdim=True)
+        # b_ij = b_ij + (out * input).sum(dim=-1, keepdim=True)
         
     return out    
     
@@ -50,7 +52,6 @@ def _k_means_routing():
         out: ``torch.LongTensor``
         The output capsule of shape: ``(batch_size, out_capsules, out_dim)``
     """
-
 
 
 class CapsuleLinear(nn.Module):
