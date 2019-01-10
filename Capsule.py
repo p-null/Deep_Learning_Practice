@@ -1,4 +1,5 @@
-
+import torch
+import torch.nn.functional as F
 
 
 def _squash(x):
@@ -20,16 +21,20 @@ def _dynamic_routing(input, bias, num_iter, squash):
     b_ij = torch.zeros_like(input)
     for i in range(num_iter):
         c_ij = F.softmax(b_ij, dim=-3)
+
         # out: [batch_size, out_capsules, in_capsules, out_dim] <-
         # c_ij: [batch_size, out_capsules, in_capsules, out_dim] *
         # input: [batch_size, out_capsules, in_capsules, out_dim]
         out = (c_ij * input).sum(dim=-2) + bias
-        out = _squash(out)
-        #b_ij = out * input
+
         # out: [batch_size, out_capsules, 1, out_dim] 
-        b_ij = b_ij + (out * input).sum(dim=-1, keepdim=True)
-    if squash:    
         out = _squash(out)
+
+        # b_ij: [batch_size, out_capsules, in_capsules, 1]
+        b_ij = (out * input).sum(dim=-1, keepdim=True)
+
+        # original implementation in the paper
+        #b_ij = b_ij + (out * input).sum(dim=-1, keepdim=True)
         
     return out    
     
@@ -111,17 +116,11 @@ class CapsuleLinear(nn.Module):
     Parameters
     ----------
     input : Dict[str, torch.LongTensor], required
-        The output of ``TextField.as_array()``.
-    label : torch.LongTensor, optional (default = None)
-        A variable representing the label for each instance in the batch.
+        The input embedded text vectors of shape ``(batch_size, in_capsules, in_dim)``
     Returns
     -------
-    An output dictionary consisting of:
-    class_probabilities : torch.FloatTensor
-        A tensor of shape ``(batch_size, num_classes)`` representing a
-        distribution over the label classes for each instance.
-    loss : torch.FloatTensor, optional
-        A scalar loss to be optimised.
+    out : ``torch.LongTensor``
+        A tensor of shape ``(batch_size, out_capsules, in_capsules, out_dim)`` 
     """
 
     if share_weight：
