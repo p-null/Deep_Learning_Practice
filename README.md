@@ -1,9 +1,12 @@
 # Deep_Learning_Practice
-This repo contains simple classic neural network models.
+
+The purpose of this repo is re-implement the classic algorithm or model in the paper.
+All the code are written in a well-commented way, following high-quality coding style.
 
 
 # dependency
 * pytorch 0.4
+
 * python 3.7
 
 
@@ -19,3 +22,14 @@ This repo contains simple classic neural network models.
 * Capsule
     A linear Capsule network from 
     [Compositional coding capsule network with k-means routing for text classification](https://arxiv.org/abs/1810.09177)
+
+# Usage
+
+All the model haven been run successfully. 
+
+There is enough information in the comment, so it is fairly easy to integrate this code with yours.
+
+# Contribution
+
+Feel free to open a issue if you have any question!
+Pull a request if you have a fix or wanna add a new model!
