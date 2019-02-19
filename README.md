@@ -17,7 +17,7 @@ All the code are written in a well-commented way, following high-quality coding 
     a simple Generative adversarial network, run on MNIST
 
 * ESIM
-
+    [Enhanced LSTM for Natural Language Inference](https://www.semanticscholar.org/paper/Enhanced-LSTM-for-Natural-Language-Inference-Chen-Zhu/83e7654d545fbbaaf2328df365a781fb67b841b4) by Chen et al., 2017.
 
 * Capsule
     A linear Capsule network from 
