@@ -132,7 +132,7 @@ class CapsuleLinear(nn.Module):
     else:
         # [batch_size, out_capsules, in_capsules, out_dim] =
         # [None,       out_capsules, in_capsules, out_dim, in_dim] @ 
-        # [batch_size, None,            in_capsules, in_dim,  None]
+        # [batch_size, None,         in_capsules, in_dim,  None]
         transformed_input = (self.weight[None, :, :, :, :] @ input[:, None, :, :, None]).squeeze(dim=-1)
 
     # bias is of shape [1, out_capsules, 1, out_dim]
