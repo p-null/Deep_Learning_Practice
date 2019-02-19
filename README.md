@@ -1,6 +1,7 @@
 # Deep_Learning_Practice
 
-The purpose of this repo is re-implement the classic algorithm or model in the paper.
+The purpose of this repo is to re-implement the classic algorithm or model in the paper.
+
 All the code are written in a well-commented way, following high-quality coding style.
 
 
@@ -14,12 +15,15 @@ All the code are written in a well-commented way, following high-quality coding 
 # Models
 
 * GAN
+
     a simple Generative adversarial network, run on MNIST
 
 * ESIM
+
     [Enhanced LSTM for Natural Language Inference](https://www.semanticscholar.org/paper/Enhanced-LSTM-for-Natural-Language-Inference-Chen-Zhu/83e7654d545fbbaaf2328df365a781fb67b841b4) by Chen et al., 2017.
 
 * Capsule
+
     A linear Capsule network from 
     [Compositional coding capsule network with k-means routing for text classification](https://arxiv.org/abs/1810.09177)
 
