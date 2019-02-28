@@ -7,8 +7,8 @@ All the code are written in a well-commented way, following high-quality coding 
 
 ## Dependencies
 
-- Python 3.7
-- Pytorch 0.4.1+
+* Python 3.7
+* Pytorch 0.4.1+
 
 
 ## Models
